@@ -5,7 +5,10 @@ import java.util.Scanner;
  */
 public class BudgetCalc {
     private int daysAtSchool;
+    private String leftOverLoop;
+    private String schoolSwitch;
     private String leftOvers;
+    private String userResponse;
     private int daysonNewarkTrain;
     private int daysOnweekendBus;
     private double livingAllowance;
@@ -22,14 +25,6 @@ public class BudgetCalc {
 
     }
 
-//    public int getDays(){
-//        livingAllowance();
-//        getDaysForWork();
-//        getDaysForSchool();
-//        getNumberOfWeekends();
-//        return
-//    }
-
     public double livingAllowance() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("How much did you make this week ?");
@@ -41,7 +36,37 @@ public class BudgetCalc {
         Scanner scanner = new Scanner(System.in);
         System.out.println("How many days do you have day classes ?");
         daysAtSchool = scanner.nextInt();
+        System.out.println("Do you have any trips on the " + "\n" + "A: Subway " + "\n" + "B. Path train " + "\n" + "C.Bus to Home ");
+        schoolSwitch = scanner.nextLine();
+        schoolSwitch = scanner.nextLine();
+        if (schoolSwitch.equalsIgnoreCase("A")) {
+            System.out.println("Do you have " + "\n" + "A: The value " + "\n" + "B:Single Trip Amount " + "\n" + "C:Roundtrip Amount");
+            userResponse = scanner.nextLine();
+            SubwayValue subwayValue = new SubwayValue();
+            subwayValue.SubwayValue(userResponse);
+        } else if (schoolSwitch.equalsIgnoreCase("B")) {
+            System.out.println("How many singe trips on the Path do you have ?");
+            userResponse = scanner.nextLine();
+            PathTrainValue pathTrainValue = new PathTrainValue();
+            pathTrainValue.PathTrainValue(userResponse);
+        } else if (schoolSwitch.equalsIgnoreCase("C")) {
+            System.out.println("How many trips on the bus back home do you have ");
+            userResponse = scanner.nextLine();
+            BusBackValue busBackValue = new BusBackValue();
+            busBackValue.BusBackValue(userResponse);
+        }
+
         return daysAtSchool;
+    }
+
+
+    private void moreLeftOversLoop() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Do you have any trips on the " + "\n" + "A: Subway " + "\n" + "B. Path train " + "\n" + "C.Bus to Home " + "\n" + "D. No Trips");
+        leftOverLoop = scanner.nextLine();
+        while (leftOverLoop.equalsIgnoreCase("d")) {
+            moreLeftOversLoop();
+        }
     }
 
     public double getDaysForWork() {
@@ -95,10 +120,6 @@ public class BudgetCalc {
         }
     }
 
-    public int leftOverTrips() {
-        int numberleft = 3;
-        return numberleft;
-    }
 
     public void getTotalPrice(double totalWeekendPrice, double totalNewarkPrice, double totalNYCPrice) {
         Scanner scanner = new Scanner(System.in);
@@ -109,7 +130,7 @@ public class BudgetCalc {
         if (response.equalsIgnoreCase("yes")) {
             double twoWeekTotal = totalPrice * 2;
             double completeTotal = livingAllowance - twoWeekTotal;
-            System.out.println("Cool so your price for the next two weeks is " + twoWeekTotal );
+            System.out.println("Cool so your price for the next two weeks is " + twoWeekTotal);
             System.out.println("Minus your living allowance you have " + completeTotal);
         } else if (response.equalsIgnoreCase("no")) {
             getTotalPrice(totalWeekendPrice, totalNewarkPrice, totalNYCPrice);
